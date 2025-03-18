@@ -125,7 +125,7 @@ const ProductList = ({
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {product.nombre}
                                 </td>
-                                <td className="px-6 py-4 text-sm text-gray-500">
+                                <td className="px-6 py-4 text-sm max-w-xs truncate text-gray-500">
                                     {product.descripcion}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

@@ -9,6 +9,7 @@ interface FormInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   required?: boolean;
   rows?: number;
+  placeholder?:string;
 }
 
 const FormInput = ({
@@ -18,11 +19,12 @@ const FormInput = ({
   value,
   onChange,
   required = false,
-  rows = 3
+  rows = 3,
+  placeholder,
 }:FormInputProps) => {
   const inputVariants = {
     focus: {
-      scale: 1.02,
+      scale: 1.01,
       transition: { type: "spring", stiffness: 300, damping: 20 }
     },
     blur: {
@@ -66,6 +68,7 @@ const FormInput = ({
           required={required}
           initial="blur"
           whileFocus="focus"
+          placeholder={placeholder}
           variants={inputVariants}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
         />

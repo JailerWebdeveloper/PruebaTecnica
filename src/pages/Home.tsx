@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaSquarePlus } from "react-icons/fa6";
 import ProductForm from "../components/ProductForm";
 import ProductList from "../components/ProductList";
+import FormInput from "../shared/Forminput";
 
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [showForm, setShowForm] = useState(false);
+  const [search, setsearch] = useState("")
   const [sortConfig, setSortConfig] = useState<{
     key: keyof Product;
     direction: "asc" | "desc";
@@ -36,6 +38,20 @@ function Home() {
     });
     setProducts(sortedProducts);
   };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setsearch(value)
+  };
+
+
+  const filteredProducts = products.filter((product) => {
+    const query = search.toLowerCase();
+    const nombreLower = product.nombre.toLowerCase();
+    const codigoStr = product.codigo.toString();
+
+    return nombreLower.includes(query) || codigoStr.includes(query);
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
@@ -106,11 +122,21 @@ function Home() {
             </motion.div>
           ) : (
             <>
-                <ProductList
-                  products={products}
-                  onDelete={handleDeleteProduct}
-                  onSort={handleSort}
-                  sortConfig={sortConfig}
+              <div className="p-4 mb-2" >
+                <FormInput
+                  placeholder="Busca por codigo o nombre"
+                  label="busqueda"
+                  type="text"
+                  name="busqueda"
+                  value={search}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <ProductList
+                products={filteredProducts}
+                onDelete={handleDeleteProduct}
+                onSort={handleSort}
+                sortConfig={sortConfig}
               />
             </>
           )}
